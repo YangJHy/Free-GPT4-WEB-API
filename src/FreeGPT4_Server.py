@@ -92,29 +92,29 @@ def applySettings(file):
 @app.route("/", methods=["GET", "POST"])
 async def index() -> str:
     """
-    Main function
+    알고리즘 텍스트 출력
     """
 
-    # Starts the bot and gets the input
-    print("Initializing...")
+    # 알고리즘 시작/ 사용자로부터 답변 수신/ 반복
+    print("진단을 준비중입니다. 잠시만 기다려 주십시오...")
     question = None
 
-    print("start")
+    print("&total번째 중 &userNumber째 질문")
     if request.method == "GET":
         question = request.args.get(args.keyword) #text
-        print("get")
+        print("답변 분석중입니다. 잠시만 기다려 주십시오...")
     else:
         file = request.files["file"]
         text = file.read().decode("utf-8")
         question = text
-        print("Post reading the file", question)
+        print("'다음' 버튼을 눌러 주셔야 합니다!", question)
 
-    print("ici")
+    print("내용을 입력하세요.")
     if question is None:
-        return "<p id='response'>Please enter a question</p>"
-    print("\nInput: " + question)
+        return "<p id='response'>답변을 입력해주세요.</p>"
+    print("\n내용을 입력하세요. " + question)
     
-    # Gets the response from the bot
+    # 알고리즘으로부터 회답을 수신/ 반복
     print(g4f.Provider.Bing.params)  # supported args
     print("COOKIES: " + str(len(args.cookie_file)))
     if (len(args.cookie_file) != 0):
@@ -137,6 +137,8 @@ async def index() -> str:
             auth=True
         )
     )
+
+    
     #Joins the response into a single string
     resp_str = ""
     for message in response:
